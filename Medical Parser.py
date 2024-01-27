@@ -14,10 +14,14 @@ insuranceClaimDOBZIP = []
 dupInsuranceClaimDOBZIP = []
 insuranceDates = {}
 voterInfo = {}
+answerList = []
 
 
 # In sheet of Voter information, combine first and last names into a new column
 voterHistoryNames['Full Name'] = voterHistoryNames["First Name"] + " " + voterHistoryNames["Last Name"]
+
+# Format Procedure list in Medical sheet as strings
+medicalTreatment["Procedure"] = medicalTreatment["Procedure"].map(str)
 """
 # Loop through newly created column in the Voter sheet and make a list of names
 for i in voterHistoryNames["Full Name"]:
@@ -47,14 +51,20 @@ for i in insuranceClaims["Date of Service"]:
 # Create dictionary with DOB-Zip as key and Full Name as value
 index = 0
 for i in voterHistoryNames["DOB ZIP"]:
-    voterInfo[i] = voterHistoryNames.loc[index, "Full Name"]
+    voterInfo[i] = voterHistoryNames.loc[index, "ID"]
     index += 1
 
 # Loop through each entry in the Date of Service column
 # of the Medical Treatment record and check if a matching date of treatment
+index = 0
 for i in medicalTreatment["Date of Service"]:
+    medCode = medicalTreatment.loc[index, "Procedure"]
+    index += 1
     if i in insuranceDates:
         x = insuranceDates[i]
         if x in voterInfo:
             y = voterInfo[x]
-            print(y)
+            y = y + "_" + medCode
+            answerList.append(y)
+
+print(answerList)
