@@ -16,18 +16,12 @@ insuranceDates = {}
 voterInfo = {}
 answerList = []
 
-
 # In sheet of Voter information, combine first and last names into a new column
 voterHistoryNames['Full Name'] = voterHistoryNames["First Name"] + " " + voterHistoryNames["Last Name"]
 
 # Format Procedure list in Medical sheet as strings
 medicalTreatment["Procedure"] = medicalTreatment["Procedure"].map(str)
-"""
-# Loop through newly created column in the Voter sheet and make a list of names
-for i in voterHistoryNames["Full Name"]:
-    if i not in voterNames:
-        voterNames.append(i)
-"""
+
 # Create new column in the voter history sheet to combine DOB and ZIP of voter
 voterHistoryNames["Date of Birth"] = voterHistoryNames["Date of Birth"].dt.strftime('%m/%d/%Y')
 voterHistoryNames["Zip"] = voterHistoryNames["Zip"].map(str)
